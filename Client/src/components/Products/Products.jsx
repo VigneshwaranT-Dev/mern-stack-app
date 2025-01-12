@@ -5,7 +5,7 @@ import ProductCard from "../ProductCard/ProductCard";
 const Products = ({ products, deleteProduct }) => {
   return (
     <div className="card-wrapper">
-      {products.map((product, index) => {
+      {products?.map((product, index) => {
         return (
           <ProductCard
             data={product}

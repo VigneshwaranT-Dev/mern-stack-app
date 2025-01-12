@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Api_Url = "http://localhost:5000/api/products";
+const Api_Url = "https://mern-stack-app-h3rj.onrender.com/api/products";
 
 export const getProducts = async () => {
     try {
