@@ -2,15 +2,18 @@ import express from "express";
 import { connectDB } from "./config/db.js";
 import cors from "cors";
 import { Product } from "./models/product.model.js";
+import dotenv from 'dotenv';
+import path from 'path';
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("Hello");
-});
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
 app.post("/api/products", async (req, res) => {
   const product = req.body;
@@ -71,7 +74,15 @@ app.delete("/api/products", async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
+if(process.env.NODE_ENV == "production"){
+  console.log("Entering Loop")
+  app.use(express.static(path.join(__dirname, "/Client/dist")));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'Client', 'dist', 'index.html'))
+  })
+}
+
+app.listen(PORT, () => {
   connectDB();
   console.log("Server Initiated in http://localhost:5000");
 });
